@@ -1,0 +1,27 @@
+---
+- name: "update apt"
+  apt:
+    upgrade: yes
+    update_cache: yes
+- name: "intall java" 
+  apt:
+    name: default-jre
+    state: present
+- name: "add repo source"
+  shell:
+    cmd: echo "deb http://www.apache.org/dist/cassandra/debian 40x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+- name: "add GPG key"
+  shell:
+    cmd: curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
+- name: "install cassandra"
+  apt:
+    name: cassandra
+    state: present
+- name: "enable cassandra service"
+  service:
+    name: cassandra
+    enabled: yes
+- name: "start cassandra service"
+  service:
+    name: cassandra
+    state: started

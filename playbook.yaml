@@ -1,0 +1,30 @@
+- name: install nginx and run site on nginx
+  hosts: vm01
+  become: true
+  vars:
+    ansible_become_pass: SD3@gslab
+  tasks:
+    - name: update apt
+      apt:
+        upgrade: yes
+        update_cache: yes
+    - name: install nginx 
+      apt:
+        name: nginx
+        state: present
+    - name: create directory
+      file:
+        path: /home/shreyash/Desktop/mysite
+        state: directory
+    - name: copy content
+      copy:
+        src: /home/shreyash/Desktop/index.html
+        dest: /home/shreyash/Desktop/mysite/index.html
+    - name: copy virtual host
+      copy: 
+        src: /home/shreyash/Desktop/vh
+        dest: /etc/nginx/sites-enabled/vh
+    - name: start nginx service
+      service:
+        name: nginx
+        state: started

@@ -1,0 +1,8 @@
+---
+- hosts: vm01
+  become: true
+  vars:
+    ansible_become_pass: SD3@gslab
+  roles:
+   - cassandra_demo
+  

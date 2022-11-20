@@ -1,0 +1,18 @@
+---
+- name: Install Java Virtual Machine
+  tasks:
+    - name: add repo to apt
+      apt_repository:
+        repo: ppa:webupd8team/java
+
+    - name: update apt
+      apt:
+        upgrade: yes
+        update_cache: yes
+
+    - name: intall java 
+      apt:
+        name: oracle-java8-set-default
+        state: present
+        
+
